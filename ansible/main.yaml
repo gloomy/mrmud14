@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: true
+
+  vars_files:
+  - defaults/main.yaml
+
+  roles:
+    - bootstrap

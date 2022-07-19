@@ -1,0 +1,5 @@
+---
+- name: Update mlocate database
+  command: updatedb
+
+- include_tasks: post/services.yaml

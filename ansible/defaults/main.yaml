@@ -1,0 +1,9 @@
+---
+
+software:
+  - tcsh
+  - mc
+  - net-tools
+  - build-essential
+  - gdb
+  - tintin++

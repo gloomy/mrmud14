@@ -1,0 +1,19 @@
+---
+- name: Retrieve service facts
+  service_facts:
+
+- name: Check mandatory services are running
+  loop: "{{ mandatory_services }}"
+  loop_control:
+    loop_var: service
+  fail:
+    msg: "service {{ service }} is not running"
+  when: "ansible_facts.services[service] is not defined or ansible_facts.services[service].state != 'running'"
+
+- name: Check mandatory services are enabled
+  loop: "{{ mandatory_services }}"
+  loop_control:
+    loop_var: service
+  fail:
+    msg: "service {{ service }} is not enabled"
+  when: "ansible_facts.services[service] is not defined or ansible_facts.services[service].status != 'enabled'"
