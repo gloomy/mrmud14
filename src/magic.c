@@ -652,8 +652,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
                 break;
             case 2:     /* not enough time */
                 if ( ch->fighting!=NULL )
-                  send_to_char( "There wasn't enough time this round to complete
- the casting.\n\r", ch );
+                  send_to_char( "There wasn't enough time this round to complete the casting.\n\r", ch );
                 else
                   send_to_char( "You lost your concentration.\n\r", ch );
                 break;

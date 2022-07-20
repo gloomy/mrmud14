@@ -522,14 +522,12 @@ const   struct  social_type     social_table [] =
 
     {
         "addict",
-        "You stand and admit to all in the room, 'Hi, I'm $n, and I'm a 
-mud addict.'",
+        "You stand and admit to all in the room, 'Hi, I'm $n, and I'm a mud addict.'",
         "$n stands and says, 'Hi, I'm $n, and I'm a mud addict.'",
         "You tell $N that you are addicted to $S love.",
         "$n tells $N that $e is addicted to $S love.",
         "$n tells you that $e is addicted to your love.",
-        "You stand and admit to yourself that you are a mud addict. Maybe you 
-should tell everyone else now?",
+        "You stand and admit to yourself that you are a mud addict. Maybe you should tell everyone else now?",
         "$n is mumbling to himself, $e's been mudding to long probably."
     },
 
@@ -902,10 +900,8 @@ should tell everyone else now?",
         "You hold $N in a warm and loving embrace.",
         "$n holds $N in a warm and loving embrace.",
         "$n holds you in a warm and loving embrace.",
-        "You hold yourself in a warm and loving embrace.  Feels silly 
-doesn't it?",
-        "$n holds $mself in a warm and loving embrace ($e looks pretty 
-silly, doesn't $e?)"
+        "You hold yourself in a warm and loving embrace.  Feels silly doesn't it?",
+        "$n holds $mself in a warm and loving embrace ($e looks pretty silly, doesn't $e?)"
     },
 
     {
@@ -915,8 +911,7 @@ silly, doesn't $e?)"
         "You rub noses with $M.",
         "$n rubs noses with $N.  You didn't know they were eskimos!",
         "$n rubs noses with you.",
-        "You become cross-eyed from your attempts at rubbing your nose on 
-yourself!",
+        "You become cross-eyed from your attempts at rubbing your nose on yourself!",
         "$n is trying to rub $s nose on $mself.  That must hurt!"
     },
 
@@ -1164,11 +1159,9 @@ yourself!",
 
    {
 	"hangover",
-	"You pop a few aspirin and put on your sunglasses.  Ow, your head hurts!
-",
+	"You pop a few aspirin and put on your sunglasses.  Ow, your head hurts!",
 	"$n holds $s head and says 'Quit breathing so loud!'",
-	"Won't $N be quiet?  Your head is gonna split in two if $E keeps talking
-!",
+	"Won't $N be quiet?  Your head is gonna split in two if $E keeps talking!",
 	"$n complains to $N 'Be quiet!  I have a hangover!",
 	"$n complains to you 'Be quiet!  I have a hangover!",
 	"You shoosh yourself.  Be quiet!  You have a hangover!",
@@ -1183,8 +1176,7 @@ yourself!",
         "$n jumps in the air and gives $N a big highfive!",
         "$n jumps in the air and gives you a big highfive!",
         "You jump in the air and congratulate yourself!",
-        "$n jumps in the air and gives himself a big highfive!  Wonder 
-what he did?"
+        "$n jumps in the air and gives himself a big highfive!  Wonder what he did?"
     },
 
     {
@@ -1502,8 +1494,7 @@ what he did?"
 	"You pretend you are Zolstead, and you demote $N to level 1.",
 	"$n pretends $e is Zolstead, and says, '$N, you're demoted to level 1!'",
 	"$n pretends $e is Zolstead, and says, 'You are demoted to level 1!'",
-	"You pretend you are the implementor, and you demote yourself to level 1
-.",
+	"You pretend you are the implementor, and you demote yourself to level 1.",
 	"$n pretends $e is Zolstead, and demotes $mself to level 1."
     },
 

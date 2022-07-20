@@ -153,8 +153,7 @@ void move_char( CHAR_DATA *ch, int door )
         else
         if ( ch->level > to_room->area->hi_hard_range )
         {
-            send_to_char( "A voice in your mind says, 'There is nothing more for
- you down that path.'", ch );
+            send_to_char( "A voice in your mind says, 'There is nothing more for you down that path.'", ch );
             return;
         }
     }
@@ -2979,8 +2978,7 @@ void do_bashdoor( CHAR_DATA *ch, char *argument )
         }
         else
         {
-            act("WHAAAAM!!!  You bash against the wall, but it doesn't
- budge.",
+            act("WHAAAAM!!!  You bash against the wall, but it doesn't budge.",
                 ch, NULL, NULL, TO_CHAR );
             act("WHAAAAM!!!  $n bashes against the wall, but it holds strong.",
                 ch, NULL, NULL, TO_ROOM );

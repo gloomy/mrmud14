@@ -2098,9 +2098,7 @@ bool gahld_ghoul(CHAR_DATA *ch)
         }
       else if((number_percent()>98)&&(tch->level>4)&&!IS_NPC(tch))
         {
-        act(
-"A lizardy voice says 'I prefer killing good things...but, a corpse IS a corpse!
-'"
+        act("A lizardy voice says 'I prefer killing good things...but, a corpse IS a corpse!'"
          ,ch,NULL,NULL,TO_ROOM);
         do_kill(ch,tch->name);
         return 0;
@@ -2127,9 +2125,7 @@ bool gahld_leadghoul(CHAR_DATA *ch)
         }
       else if((number_percent()>99)&&(tch->level>4)&&!IS_NPC(tch))
         {
-        act(
-"A lizardy voice says 'I prefer killing good things...but, a corpse IS a corpse!
-'"
+        act("A lizardy voice says 'I prefer killing good things...but, a corpse IS a corpse!'"
          ,ch,NULL,NULL,TO_ROOM);
         if(ch->fighting==NULL)
           set_fighting(ch,tch);
@@ -2536,13 +2532,11 @@ bool gahld_spectre(CHAR_DATA *ch)
     for(tch=ch->in_room->first_person;tch!=NULL;tch=tch->next_in_room)
       if((!IS_NPC(tch))&&(tch->position==POS_RESTING))
         {
-        act(
-"The Ancient King says 'I have taken to haunting this castle because my own
-  blood employed the help of a deceitful magician.  The magician became a
-  Lich and drained all of the life from my great grandson and his subjects.
-  I wish to be avenged, but all I have been able to do is haunt this room.
-  Something will not let me venture forth.'
-"
+        act("The Ancient King says 'I have taken to haunting this castle because my own"
+            "blood employed the help of a deceitful magician.  The magician became a"
+            "Lich and drained all of the life from my great grandson and his subjects."
+            "I wish to be avenged, but all I have been able to do is haunt this room."
+            "Something will not let me venture forth.'"
           ,ch,NULL,NULL,TO_ROOM);
         return 0;
         }
@@ -2620,8 +2614,7 @@ bool gahld_lich(CHAR_DATA *ch)
   for(tch=rm->first_person;tch!=NULL;tch=tch_next)
     {
     tch_next=tch->next_in_room;
-    if((!IS_NPC(tch))&&(tch->position==POS_SLEEPING)&&(get_obj_list(tch,"firecha
-in",tch->first_carrying)!=NULL))
+    if((!IS_NPC(tch))&&(tch->position==POS_SLEEPING)&&(get_obj_list(tch,"firechain",tch->first_carrying)!=NULL))
       {
       char_from_room(tch);
       char_to_room(tch,get_room_index(GAHLD_BASE+96));
@@ -2663,10 +2656,7 @@ in",tch->first_carrying)!=NULL))
     case 10:
       return cast_spell(ch,"curse");
     case 11:
-      act(
-"The Lich says 'Once upon a time, there was a great kingdom with many subjects.
-  One day, I decided to obliterate the pesky mortals.  I did.'
-",ch,NULL,NULL,TO_ROOM);
+      act("The Lich says 'Once upon a time, there was a great kingdom with many subjects. One day, I decided to obliterate the pesky mortals.  I did.'",ch,NULL,NULL,TO_ROOM);
       break;
     case 12:
       do_say(ch,"Would you like to see my collection of skulls?");

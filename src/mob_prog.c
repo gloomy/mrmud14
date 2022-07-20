@@ -35,7 +35,7 @@
 
 struct act_prog_data *mob_act_list;
 
-extern int sscanf();
+//extern int sscanf();
 /*
  * Global function prototypes
  */

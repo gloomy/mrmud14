@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include "merc.h"
 
-extern int sscanf();
+//extern int sscanf();
 /*
  * Local functions.
  */
