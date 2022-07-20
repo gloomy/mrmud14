@@ -517,7 +517,7 @@ void load_clans( )
         }
     }
     fclose( fpList );
-    log_string("Done clans " );
+    log_string("Done clans" );
     return;
 }
 

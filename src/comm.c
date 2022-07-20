@@ -56,27 +56,13 @@
 
 #include "merc.h"
 
-const char sector_name[8][20] = 
-  { "Inside", "City", "Field", "Forest", "Hills", "Mountains", "Shallow Water", "Deep Water" };
-/*
- * Malloc debugging stuff.
- */
-#if defined(sun)
-#undef MALLOC_DEBUG
-#endif
+const char sector_name[8][20] = { "Inside", "City", "Field", "Forest", "Hills", "Mountains", "Shallow Water", "Deep Water" };
 
 void scan_for_duplication( CHAR_DATA *);
 char prompt_buffer[MAX_INPUT_LENGTH];
 char *prompt_return( CHAR_DATA *, char *);
 
 static void StupidAdmin();
-#if defined(MALLOC_DEBUG)
-#include <malloc.h>
-extern	int	malloc_debug	args( ( int  ) );
-extern	int	malloc_verify	args( ( void ) );
-#endif
-
-/*int gettimeofday    args( ( struct timeval *tp, struct timezone *tzp ) );*/
 
 #define INSTRUCTION_PAGES 20
 
@@ -91,7 +77,6 @@ void scan_objects_container( CHAR_DATA *);
 void remove_bad_desc( CHAR_DATA *, bool);
 void remove_bad_desc_name( char *);
 bool find_ch_game( CHAR_DATA *);
-bool find_ch_room( CHAR_DATA *);
 bool find_ch_player( CHAR_DATA *);
 CHAR_DATA *scan_char( DESCRIPTOR_DATA *, char * );
 int count_links( HOST_NAMES *);
@@ -101,19 +86,10 @@ int count_links( HOST_NAMES *);
  * Apollo has a problem with __attribute(atomic) in signal.h,
  *   I dance around it.
  */
-#if defined(apollo)
-#define __attribute(x)
-#endif
 
 #if defined(unix)
 #include <signal.h>
 #endif
-
-#if defined(apollo)
-#undef __attribute
-#endif
-
-
 
 /*
  * Socket and TCP/IP stuff.
@@ -138,51 +114,9 @@ char 	go_ahead_str	[] = { IAC, GA, '\0' };
 /* int wait4( void ); */
 #endif
 
-
-
 /*
  * OS-dependent declarations.
  */
-#if	defined(_AIX)
-#include <sys/select.h>
-int	accept		args( ( int s, struct sockaddr *addr, int *addrlen ) );
-int	bind		args( ( int s, struct sockaddr *name, int namelen ) );
-void	bzero		args( ( char *b, int length ) );
-int	getpeername	args( ( int s, struct sockaddr *name, int *namelen ) );
-int	getsockname	args( ( int s, struct sockaddr *name, int *namelen ) );
-int	gettimeofday	args( ( struct timeval *tp, struct timezone *tzp ) );
-int	listen		args( ( int s, int backlog ) );
-int	setsockopt	args( ( int s, int level, int optname, void *optval,
-			    int optlen ) );
-int	getsockopt	args( ( int s, int level, int optname, void *optval,
-			    int *optlen ) );
-int	socket		args( ( int domain, int type, int protocol ) );
-#endif
-
-#if	defined(apollo)
-#include <unistd.h>
-void	bzero		args( ( char *b, int length ) );
-#endif
-
-#if	defined(__hpux)
-int	accept		args( ( int s, void *addr, int *addrlen ) );
-int	bind		args( ( int s, const void *addr, int addrlen ) );
-void	bzero		args( ( char *b, int length ) );
-int	getpeername	args( ( int s, void *addr, int *addrlen ) );
-int	getsockname	args( ( int s, void *name, int *addrlen ) );
-int	gettimeofday	args( ( struct timeval *tp, struct timezone *tzp ) );
-int	listen		args( ( int s, int backlog ) );
-int	setsockopt	args( ( int s, int level, int optname,
- 				const void *optval, int optlen ) );
-int	getsockopt	args( ( int s, int level, int optname, void *optval,
-			    int *optlen ) );
-int	socket		args( ( int domain, int type, int protocol ) );
-#endif
-
-#if	defined(interactive)
-#include <net/errno.h>
-#include <sys/fcntl.h>
-#endif
 
 #if	defined(linux)
 /* int	accept		args( ( int s, struct sockaddr *addr, int *addrlen ) );*/
@@ -385,54 +319,19 @@ int main( int argc, char **argv )
     str_empty = str_dup( "x" );
     *str_empty = '\0';
 
-    /*
-     * Memory debugging if needed.
-     */
-#if defined(MALLOC_DEBUG)
-    malloc_debug( 2 );
-#endif
-
-
  /* Let's log the current system constraints as seen by MrMud - Chaos 5/3/98 */
     {
-    char bufm[200];
     struct rlimit rlpt;
 
     getrlimit( RLIMIT_DATA, &rlpt );
-    sprintf( bufm, "System memory usage: %ld max %ld current", 
-	(long)rlpt.rlim_max, (long)rlpt.rlim_cur);
-    log_string( bufm );
+    log_printf( "System memory usage: %ld max %ld current", (long)rlpt.rlim_max, (long)rlpt.rlim_cur );
     rlpt.rlim_max= RLIM_INFINITY;
     rlpt.rlim_cur= RLIM_INFINITY;
     setrlimit( RLIMIT_DATA, &rlpt );
     getrlimit( RLIMIT_DATA, &rlpt );
-    sprintf( bufm, "Unlimited memory usage: %ld max %ld current", 
-	(long)rlpt.rlim_max, (long)rlpt.rlim_cur);
-    log_string( bufm );
+    log_printf( "Unlimited memory usage: %ld max %ld current", (long)rlpt.rlim_max, (long)rlpt.rlim_cur );
 
     }
-
-    /* test memory allocations   
-  for( cnt2=0; cnt2<4; cnt2++ )
-    {
-    char *pt, *pto;
-    int cnt;
-    char bufm[100];
-
-    pto = STRALLOC( "Testing." );
-    for( pt=pto, cnt=0; cnt<strlen(pto); cnt++)
-      {
-      sprintf( bufm, "Testing byte %2d - %c", cnt , *pt);
-      log_string( bufm );
-      pt++;
-      }
-    sprintf( bufm, "Block size %d", get_string_size( (unsigned char*)pto ) );
-    log_string( bufm );
-    STRFREE (pto );
-    }  
-
-  log_string( "Testing over." );
-  abort(); */
 
     /*
      * Init time.
@@ -545,8 +444,7 @@ int main( int argc, char **argv )
     {
       control = init_socket( port );
     }
-    sprintf( log_buf, "MrMud is ready on port %d.", port );
-    log_string( log_buf );
+    log_printf( "MrMud is ready on port %d.", port );
     fpAppend = fopen( NULL_FILE, "r" );
 
     mix_race_war();
@@ -759,13 +657,7 @@ void game_loop_unix( int control , int port)
 
         open_timer( TIMER_SCAN_DESC );
 
-
-#if defined(MALLOC_DEBUG)
-	if ( malloc_verify( ) != 1 )
-	    abort( );
-#endif
-
-       /* Terminate any children at rate of 4/sec 
+       /* Terminate any children at rate of 4/sec
        wait4(); */
 
 	/*
@@ -1802,8 +1694,6 @@ bool read_from_descriptor( DESCRIPTOR_DATA *d )
     return TRUE;
 }
 
-
-
 /*
  * Transfer one line from input buffer to input line.
  */
@@ -1888,10 +1778,8 @@ void read_from_buffer( DESCRIPTOR_DATA *d )
 	    {
             if( ch->pcdata->auto_flags == AUTO_OFF )
 	      {
-		sprintf( log_buf, "%s input spamming!", d->host );
-		log_string( log_buf );
-		write_to_descriptor( d,
-		    "\n\r*** PUT A LID ON IT!!! ***\n\rYou have just repeated a command over 50 times.\n\rYou may get back on the game now.\n\r", 0 );
+		log_printf( "%s input spamming!", d->host );
+		write_to_descriptor( d, "\n\r*** PUT A LID ON IT!!! ***\n\rYou have just repeated a command over 50 times.\n\rYou may get back on the game now.\n\r", 0 );
 		strcpy( d->incomm, "quit now" );
 	      }
             else
@@ -3078,14 +2966,14 @@ bool nanny( DESCRIPTOR_DATA *d, char *argument )
 
 	if ( IS_SET(ch->act, PLR_DENY) && !TEST_GAME)
 	{
-          if( ch->level >= MAX_LEVEL )
-	    sprintf( log_buf, "Denying access to GOD %s@%s.", argument, d->host );
-          else
-	    sprintf( log_buf, "Denying access to %s@%s.", argument, d->host );
-	    log_string( log_buf );
-	    write_to_buffer( d, "You are denied access.\n\r", 0 );
-	    close_socket( d , TRUE);
-	    return(outp);
+      if( ch->level >= MAX_LEVEL )
+        log_printf( "Denying access to GOD %s@%s.", argument, d->host );
+      else
+        log_printf( "Denying access to %s@%s.", argument, d->host );
+      write_to_buffer( d, "You are denied access.\n\r", 0 );
+      close_socket( d , TRUE);
+
+      return(outp);
 	}
 
         if( !strcasecmp( argument, "new" ) )
@@ -3961,20 +3849,6 @@ bool find_ch_player( CHAR_DATA *ch )
               return( TRUE );
 
          return( FALSE );
-}
-
-bool find_ch_room( CHAR_DATA *ch )
-{
-	CHAR_DATA *prev;
-
-       if( ch==NULL || ch->in_room == NULL)
-         return( FALSE );
-
-	for ( prev = ch->in_room->first_person; prev; prev = prev->next_in_room )
-	    if ( prev->next_in_room == ch )
-		prev->next_in_room = ch->next_in_room;
-                  return( TRUE );
-      return( FALSE );
 }
 
 /*

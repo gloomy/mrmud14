@@ -509,8 +509,7 @@ void boot_db( bool fCopyOver )
 	  {
 	  char qbuf[180];
 	  strcpy( strArea, fread_word( fpList ) );
-    log_string( strArea );
-    /* log_string( hash_stats("") );*/
+      log_string( strArea );
 	  if ( strArea[0] == '$' )
 		  break;
 
@@ -1316,9 +1315,6 @@ void load_objects( FILE *fp )
         {
         objects_adjusted++;
         pObjIndex->level_rent = ( pObjIndex->level_rent + est ) /2;
-        /*sprintf(buf, "Adjusting item [%u]%s level %d/%d to %d", pObjIndex->vnum,
-          pObjIndex->name, old, est, pObjIndex->level_rent );
-        log_string( buf ); */
         }
       }
 
@@ -1326,8 +1322,6 @@ void load_objects( FILE *fp )
 
     return;
 }
-
-
 
 /*
  * Snarf a reset section.
@@ -1477,18 +1471,6 @@ void load_resets( FILE *fp )
      top_reset++;
     }
 
-  /* if( TRUE )
-    {
-    char buf[MAX_STRING_LENGTH];
-    int cnt;
-    cnt=0;
-    for( pReset = area_load->first_reset; pReset != NULL; pReset=pReset->next)
-      cnt++;
-    sprintf( buf, "Links in area: %d", cnt);
-    log_string( buf );
-    } */
-    /* Set up container references     -   Chaos 5/30/95   */
-
   for( pReset = area_load->first_reset; pReset != NULL; pReset=pReset->next)
     {
      if( pReset->command == 'G' || pReset->command == 'E' )
@@ -1500,8 +1482,6 @@ void load_resets( FILE *fp )
     }
     return;
 }
-
-
 
 /*
  * Load the Swear list
@@ -4096,8 +4076,7 @@ void bug( const char *str, ... )
             fseek( fpArea, iChar, 0 );
         }
 
-        sprintf( buf, "[*****] FILE: %s LINE: %d", strArea, iLine );
-        log_string( buf );
+        log_printf( "[*****] FILE: %s LINE: %d", strArea, iLine );
 
         if ( stat( SHUTDOWN_FILE, &fst ) != -1 )        /* file exists */
         {
@@ -4627,24 +4606,11 @@ void create_menu_tree()
       HELP_DATA *pHelp,*tHelp;
       HELP_MENU_DATA *menu;
       char buf[ MAX_STRING_LENGTH ];
-/*  This is to debug help stuff
-      counter=0;
-      for ( pHelp = help_first; pHelp != NULL; pHelp = pHelp->next,counter++ )
-          {
-          sprintf( buf, "Help %d<:%s>strlen=%d", counter, pHelp->keyword,
-              strlen( pHelp->text) );
-          log_string( buf );
-          } */
       counter=0;
       for ( pHelp = help_first; pHelp != NULL; pHelp = pHelp->next,counter++ )
 	{
 	ptmode=0;
-        /* if( counter%100==0 )
-          {
-          sprintf( buf, "Help counter %d/%d.", counter, top_help );
-          log_string( buf );
-          } */
-        strcpy( buf, pHelp->text );
+    strcpy( buf, pHelp->text );
 	pt=buf;
 	while( ptmode!=3 && *pt!='\0')
 	  {
@@ -4713,7 +4679,6 @@ int find_command( char *cmd_str )
   return( -1);
   }
 
-
 OBJ_PROG * load_object_program( FILE *fp)
   {
   char keyword;
@@ -4731,11 +4696,10 @@ OBJ_PROG * load_object_program( FILE *fp)
       strcpy( buf, fread_word( fp ) );
       prg->cmd = find_command( buf ) ;
       if( prg->cmd == -1)
-	{
-        sprintf( buf2, "Bad  obj_command command name: %s",  buf );
-	log_string( buf2 );
-	abort();
-	}
+	  {
+	    log_printf( "Bad obj_command command name: %s",  buf );
+	    abort();
+	  }
       break;
     case 'U':    /* unknown command or social */
       prg->percentage = fread_number( fp );  /* get chance number */

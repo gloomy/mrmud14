@@ -86,19 +86,8 @@
 #define TRUE	 1
 #endif
 
-#if	defined(_AIX)
-#if	!defined(const)
-#define const
-#endif
-typedef int				sh_int;
-typedef int				bool;
-#define unix
-#else
 typedef short    int			sh_int;
 typedef unsigned char			bool;
-#endif
-
-
 
 /*
  * Structure types.
@@ -2965,22 +2954,7 @@ DECLARE_SPELL_FUN( 	spell_fire_shield	);
  * These are all very standard library functions,
  *   but some systems have incomplete or non-ansi header files.
  */
-#if	defined(_AIX)
-char *	crypt		args( ( const char *key, const char *salt ) );
-#endif
 
-#if	defined(apollo)
-int	atoi		args( ( const char *string ) );
-void *	calloc		args( ( unsigned nelem, size_t size ) );
-char *	crypt		args( ( const char *key, const char *salt ) );
-#endif
-
-#if	defined(hpux)
-char *	crypt		args( ( const char *key, const char *salt ) );
-#endif
-
-#if	defined(interactive)
-#endif
 
 #if	defined(linux)
 char *	crypt		args( ( const char *key, const char *salt ) );

@@ -239,10 +239,8 @@ void save_char_obj(CHAR_DATA *ch, int which_type)
        fp = fopen( strtemp, "r" ) ;
        if( !is_valid_file( ch, fp ) )
          {
-         char tbuf[200];
          fclose( fp );
-         sprintf( tbuf, "SAVE not valid for %s", ch->name );
-         log_string( tbuf );
+         log_printf( "SAVE not valid for %s", ch->name );
          send_to_char( "The file system has become unstable.  Please inform the Gods.\n\r", ch );
          remove( strtemp ); 
          }
@@ -1246,8 +1244,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     
         if( d->descriptor != -999  )
           {
-          sprintf( buf, "Loading character file: %s [socket:%d]", name, d->descriptor);
-          log_string( buf );
+          log_printf( "Loading character file: %s [socket:%d]", name, d->descriptor );
           }
 
       if( !is_valid_file( ch, fp ) )
@@ -1280,8 +1277,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
           }
         remove( buf2 );
         rename( buf, buf2);
-        sprintf( name_buf, "Erasing old char %s", name );
-        log_string( name_buf );
+        log_printf( "Erasing old char %s", name );
         load_error = TRUE;
         return( load_char_obj( d, name ) );
         }
@@ -1300,13 +1296,10 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
 	    }
 
 	    if ( letter != '#' )
-	      {
-              char buf[600];
-              sprintf( buf, "Load_char_obj: # not found.  word was '%c%s'",
-                     letter, fread_word( fp ));
-	      log_string( buf );
-		break;
-	      }
+        {
+	      log_printf( "Load_char_obj: # not found.  word was '%c%s'", letter, fread_word( fp ) );
+		  break;
+        }
 
 	    word = fread_word( fp );
 	    if ( !strcasecmp( word, "PLAYER" ) )
@@ -1318,8 +1311,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
                    break;
                  if( strcasecmp( ch->name, name ) )
                    {
-                   sprintf( buf, "Incorrect name. #END on %s", name );
-                   log_string( buf );
+                   log_printf( "Incorrect name. #END on %s", name );
                    break;
                    }
                  }
@@ -1540,8 +1532,7 @@ if(ch->in_room!=NULL && ch->in_room->sector_type == SECT_INN )
         extract_char( ch, TRUE );
         remove( buf2 );
         rename( buf, buf2);
-        sprintf( name_buf, "Erasing old char %s", name );
-        log_string( name_buf );
+        log_printf( "Erasing old char %s", name );
         return( load_char_obj( d, name ) );
         }
       }   
@@ -1921,29 +1912,23 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
                 /* Fix wierd hp/mana/move */
                   if( ch->max_hit<10 )
                     {
-                    char tbuf[100];
                     int new_hit;
                     new_hit =  10 + ch->level * 10;
-                    sprintf(tbuf,"adjust hp %d to %d",ch->max_hit,new_hit);
-                    log_string( tbuf );
+                    log_printf( "adjust hp %d to %d",ch->max_hit,new_hit );
                     ch->max_hit=new_hit;
                     ch->hit = new_hit;
                     }
                   if( ch->max_mana < 10 )
                     {
-                    char tbuf[100];
-                    sprintf( tbuf, "adjust mn %d to %d", ch->max_mana, 100);
-                    log_string( tbuf );
+                    log_printf( "adjust mn %d to %d", ch->max_mana, 100 );
                     ch->max_mana=100;
                     ch->mana=100;
                     }
                   if( ch->max_move < 10 )
                     {
-                    char tbuf[100];
                     int new_move;
                     new_move = 100 + ch->level * 4;
-                    sprintf( tbuf, "adjust mv %d to %d", ch->move, new_move );
-                    log_string( tbuf );
+                    log_printf( "adjust mv %d to %d", ch->move, new_move );
                     ch->max_move=new_move;
                     ch->move=new_move;
                     }
@@ -3180,12 +3165,11 @@ OBJ_DATA *fread_corpse_item( OBJ_DATA *ch_obj, CHAR_DATA *ch, FILE *fp ,
 		int vnum;
 		vnum = fread_number( fp );
 		while ( ( obj->pIndexData = get_obj_index( vnum ) ) == NULL )
-                    {
-                    char nBuf[81];
-                    sprintf(nBuf,"corpse_fread_obj: bad vnum %u.", vnum );
-		    log_string(nBuf);
-                    vnum=OBJ_VNUM_MUSHROOM;
-                    }
+        {
+          char nBuf[81];
+          log_printf( "corpse_fread_obj: bad vnum %u.", vnum );
+          vnum=OBJ_VNUM_MUSHROOM;
+        }
 		fVnum = TRUE;
 		fMatch = TRUE;
 		break;
@@ -3202,11 +3186,11 @@ OBJ_DATA *fread_corpse_item( OBJ_DATA *ch_obj, CHAR_DATA *ch, FILE *fp ,
 
 	if ( !fMatch )
 	{
-	    log_string( "Fread_corpse_obj: no match.");
+	  log_string( "Fread_corpse_obj: no match.");
       log_string( word);
-	    fread_to_eol( fp );
+	  fread_to_eol( fp );
 	}
-    }
+  }
  return(out_obj);
 }
 
@@ -3298,7 +3282,6 @@ bool is_enchanted_obj( OBJ_DATA *obj )
 bool is_valid_file( CHAR_DATA *ch, FILE *fp )
 {
   char buf[MAX_INPUT_LENGTH];
-  char tbuf[MAX_INPUT_LENGTH];
   int cnt;
   int cf;
   char *pt, *pt2;
@@ -3315,8 +3298,7 @@ bool is_valid_file( CHAR_DATA *ch, FILE *fp )
 
   if( cnt == -50 )
     {
-    sprintf( buf, "Didn't find an #END on %s", ch->name );
-    log_string( buf );
+    log_printf( "Didn't find an #END on %s", ch->name );
     rewind( fp );
     return( FALSE );
     }
@@ -3343,8 +3325,7 @@ bool is_valid_file( CHAR_DATA *ch, FILE *fp )
     /* Might find #OBJ or something or other  */
   if( *(buf+1)!='E' || *(buf+2)!='N' || *(buf+3)!='D' )
     {
-    sprintf( buf, "Didn't find an #END on %s", ch->name );
-    log_string( buf );
+    log_printf( "Didn't find an #END on %s", ch->name );
     rewind( fp );
     return( FALSE );
     }
@@ -3368,9 +3349,8 @@ bool is_valid_file( CHAR_DATA *ch, FILE *fp )
     rewind( fp );
     return( TRUE );
     }
-    
-  sprintf( tbuf, "Cross linked file %s on %s", pt, ch->name );
-  log_string( tbuf );
+
+  log_printf( "Cross linked file %s on %s", pt, ch->name );
   rewind( fp );
   return( FALSE );
 }

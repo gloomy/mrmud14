@@ -3094,9 +3094,7 @@ void set_exit( int room, int door, int dest)
   if( room<1 || dest<-1 || room_index[ room ] == NULL || door<0 || door>5
            || ( dest != -1 && room_index[dest]==NULL))
     {
-    char buf[200];
-    sprintf( buf, "Bad room connect at %d door %d to %d", room, door, dest );
-    log_string( buf );
+    log_printf( "Bad room connect at %d door %d to %d", room, door, dest );
     return;
     }
 

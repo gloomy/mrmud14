@@ -21,7 +21,6 @@
 #include <time.h>
 #include "merc.h"
 
-
 /* Externals */
 extern	int	top_reset;
 char *		sprint_reset	args( ( CHAR_DATA *ch, RESET_DATA *pReset,
@@ -29,12 +28,10 @@ char *		sprint_reset	args( ( CHAR_DATA *ch, RESET_DATA *pReset,
 RESET_DATA *	parse_reset	args( ( AREA_DATA *tarea, char *argument,
 					CHAR_DATA *ch ) );
 int		get_wearloc	args( ( char *type ) );
-int		get_trapflag	args( ( char *flag ) );
 int		get_exflag	args( ( char *flag ) );
 int		get_rflag	args( ( char *flag ) );
 extern	char *	const		wear_locs[];
 extern	char *	const		ex_flags[];
-
 
 
 bool is_room_reset  args( ( RESET_DATA *pReset, ROOM_INDEX_DATA *aRoom,
@@ -56,30 +53,6 @@ RD *find_reset      args( ( AREA_DATA *pArea, ROOM_INDEX_DATA *pRoom,
 #undef RD
 void list_resets    args( ( CHAR_DATA *ch, AREA_DATA *pArea,
 			    ROOM_INDEX_DATA *pRoom, int start, int end ) );
-
-
-bool is_existing_mob  ( RESET_DATA *pReset )
-  {
-  CHAR_DATA *mob;
-
-  for( mob=first_char; mob!=NULL; mob=mob->next )
-    if( IS_NPC(mob) && mob->reset == pReset )
-      return( TRUE );
-
-  return( FALSE );
-  }
-
-bool is_existing_obj  ( RESET_DATA *pReset )
-  {
-  OBJ_DATA *obj;
-
-  for( obj=first_object; obj!=NULL; obj=obj->next )
-    if( obj->reset == pReset )
-      return( TRUE );
-
-  return( FALSE );
-  }
-
 
 RESET_DATA *find_reset(AREA_DATA *pArea, ROOM_INDEX_DATA *pRoom, int numb)
 {
@@ -1028,18 +1001,13 @@ void reset_area( AREA_DATA *pArea )
 	    break;
 
 	case 'M':
-            mob = pReset->mob;
-            if( mob != NULL )
-	      {
-		    last = FALSE;
-		    mob = NULL;
-		    break;
-	      } 
-
-
-            /* Check for reloading mobs - Chaos  4/2/99 
-            if( is_existing_mob( pReset ) )
-              continue; */
+        mob = pReset->mob;
+        if( mob != NULL )
+        {
+          last = FALSE;
+          mob = NULL;
+          break;
+        }
 
 	    if ( ( pMobIndex = get_mob_index( pReset->arg1 ) ) == NULL )
 	    {
@@ -1054,7 +1022,6 @@ void reset_area( AREA_DATA *pArea )
 	    }
 
 	    level = pMobIndex->level ;
-
 
 	    mob = create_mobile( pMobIndex );
 	    mob->reset=pReset;
@@ -1084,8 +1051,8 @@ void reset_area( AREA_DATA *pArea )
 	    break;
 
 	case 'O':
-               /* Let's not make more than one */
-          if( pReset->obj != NULL )
+        /* Let's not make more than one */
+        if( pReset->obj != NULL )
 	    {
 		last = FALSE;
 		break;
@@ -1104,10 +1071,6 @@ void reset_area( AREA_DATA *pArea )
 		continue;
 	    }
 
-            /* Check for reloading objs - Chaos  4/2/99 
-            if( is_existing_obj( pReset ) )
-              continue; */
-
 	if ( number_range(1,5)!=1)
 	    if ( pObjIndex->total_objects >= pObjIndex->max_objs )
 	    {
@@ -1123,11 +1086,11 @@ void reset_area( AREA_DATA *pArea )
 	    break;
 
 	case 'P':
-               /* Let's not make more than one */
-          if( pReset->obj != NULL )
+        /* Let's not make more than one */
+        if( pReset->obj != NULL )
 	    {
-		last = FALSE;
-		break;
+          last = FALSE;
+          break;
 	    }
 	    
 	    if ( ( pObjIndex = get_obj_index( pReset->arg1 ) ) == NULL )
@@ -1141,17 +1104,11 @@ void reset_area( AREA_DATA *pArea )
 		bug( "Reset_area: 'P': bad vnum %u.", pReset->arg3 );
 		continue;
 	    }
-
-            /* Check for reloading objs - Chaos  4/2/99 
-            if( is_existing_obj( pReset ) ) 
-              continue; */
-            
            obj_to = NULL;
            if( pReset->container != NULL )
                obj_to = pReset->container->obj;
            if( obj_to == NULL )
 	    {
-		/* bug( "Reset_area: 'P': bad to_obj %d.", pReset->arg3 ); */
 		continue;
 	    }
  
@@ -1192,15 +1149,10 @@ void reset_area( AREA_DATA *pArea )
 	    if ( ( pObjIndex = get_obj_index( pReset->arg1 ) ) == NULL )
 	      {
 		    bug( "Reset_area: 'E' or 'G': bad vnum %u.", pReset->arg1 );
-		    sprintf( buf, "Reset_area: 'E' or 'G': bad vnum %u.", pReset->arg1 );
-	log_string( buf);
+	        log_printf( "Reset_area: 'E' or 'G': bad vnum %u.", pReset->arg1 );
 		    last = FALSE;
 	break;
 	      }
-
-            /* Check for reloading objs - Chaos  4/2/99 
-            if( is_existing_obj( pReset ) )
-              continue; */
 
 	    if ( mob->pIndexData->pShop != NULL )
 	      {

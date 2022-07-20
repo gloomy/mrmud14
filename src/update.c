@@ -1531,8 +1531,6 @@ char_update (void)
   return;
 }
 
-
-
 /*
  * Update all objs.
  * This function is performance sensitive.
@@ -1579,19 +1577,14 @@ obj_update (void)
 	      SET_BIT (obj->value[1], CONT_LOCKED);
 	}
 
-      if (obj->pIndexData == NULL)
+    if (obj->pIndexData == NULL)
 	{
-          char buf[200];
-          sprintf( buf, "Object with NULL index: %s on %s", obj->name,
-                    obj->carried_by != NULL ? obj->carried_by->name :
-                    "none" );
-          log_string( buf );
-
+      log_printf( "Object with NULL index: %s on %s", obj->name, obj->carried_by != NULL ? obj->carried_by->name : "none" );
 	  extract_obj (obj);
 	  continue;
 	}
 
-      if (obj->pIndexData->obj_fun != 0)
+    if (obj->pIndexData->obj_fun != 0)
 	{
 	  if ((*obj->pIndexData->obj_fun) (obj, OBJ_UPDATE, NULL, NULL, NULL))
 	    continue;
@@ -1823,11 +1816,6 @@ aggr_update (void)
 	}
       if (oldest != NULL)
 	{
-	  /* new_time = (current_time - oldest->pcdata->last_saved) ;
-	     if( new_time < 0)    
-	     new_time += (60*24*60);
-	     sprintf( buf, "Autosaving %s delayed %d sec", oldest->name , new_time );
-	     log_string( buf );  */
 	  save_char_obj (oldest, NORMAL_SAVE);
 	  /* If the save failed, then last_saved doesn't change.
 	     Let's change it now, so the loop doesn't stick on one player. */
