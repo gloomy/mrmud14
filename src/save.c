@@ -1400,7 +1400,8 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
             if( ch->pcdata->pvnum != 166 &&    /* Chaos */
                 ch->pcdata->pvnum != 107     /* Order */  )
               {
-              SET_BIT( ch->act, PLR_DENY);
+              // disabled for local testing
+              // SET_BIT( ch->act, PLR_DENY);
               }
 
   /* Deny players with screwed up levels  - Chaos  3/7/99  */
