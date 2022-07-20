@@ -3076,34 +3076,9 @@ bool nanny( DESCRIPTOR_DATA *d, char *argument )
     return(outp);
     }
 
-   /* Check here for tintin thrashing 
-  if (!TEST_GAME)
-  {
-  int ntime;
-
-  ntime = get_game_realtime();
-   if( fOld )
-     {
-     if( ch->pcdata->last_connect != 0  && ntime > ch->pcdata->last_connect &&
-         ntime - ch->pcdata->last_connect < 30 && ch->level<=95)
-       {
-
-       write_to_buffer( d, "You are logging in too quick.  Please wait 1 minute.\n\r", 1000000);
-        if( !fOld )
-          ch->wait = PULSE_TICK;
-        else
-          {
-	  close_socket( d , TRUE);
-	  return(outp);
-          }
-       }
-     }
-   ch->pcdata->last_connect = ntime;
-  }
-  */   
 	if ( IS_SET(ch->act, PLR_DENY) && !TEST_GAME)
 	{
-          if( ch->level >= 99 )
+          if( ch->level >= MAX_LEVEL )
 	    sprintf( log_buf, "Denying access to GOD %s@%s.", argument, d->host );
           else
 	    sprintf( log_buf, "Denying access to %s@%s.", argument, d->host );

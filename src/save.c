@@ -1246,7 +1246,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     
         if( d->descriptor != -999  )
           {
-          sprintf( buf, "Loading character file: %s D%d", name, d->descriptor);
+          sprintf( buf, "Loading character file: %s [socket:%d]", name, d->descriptor);
           log_string( buf );
           }
 
@@ -1409,7 +1409,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     int cnt2;
     for(cnt=0,cnt2=0;cnt<MAX_CLASS;cnt++)
       cnt2+=ch->mclass[cnt];
-    if( ch->level < 99 && ch->level != cnt2 )
+    if( ch->level < MAX_LEVEL && ch->level != cnt2 )
       SET_BIT( ch->act, PLR_DENY);
     }
 
