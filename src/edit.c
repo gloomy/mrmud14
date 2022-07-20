@@ -3667,7 +3667,6 @@ void save_area( AREA_DATA *area, bool forreal )
   
   sprintf( buf, "%s.bak", area->filename );
 
-      fclose( fpReserve );
   fp=fopen( buf, "w");
 
   save_header( fp, area);
@@ -3699,7 +3698,6 @@ void save_area( AREA_DATA *area, bool forreal )
         }
       }
 
-      fpReserve = fopen( NULL_FILE, "r" );
 #ifdef USE_THREADS
         pthread_detach(pthread_self());
         pthread_exit(NULL);

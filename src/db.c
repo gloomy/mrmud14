@@ -40,7 +40,6 @@ extern  int     _filbuf         args( (FILE *) );
 
 extern int port,control; /* db.c */
 
-FILE *fpReserve;
 FILE *fpAppend;
 
 void remove_objects( void );
@@ -818,7 +817,6 @@ void load_owners( void)
 
     log_string( "Loading Owner list..." );
 
-    fclose( fpReserve );
     if ( ( fpList = fopen( OWNER_LIST, "r") ) == NULL )
     {
         perror( OWNER_LIST );
@@ -842,7 +840,6 @@ void load_owners( void)
     }
     fclose( fpList );
     log_string("Done Owners" );
-    fpReserve = fopen( NULL_FILE, "r" );
 
     return;
 }
@@ -850,7 +847,6 @@ void save_owners( )
 {
     OWNER_DATA *pOwner;
     FILE *fpout;
-    fclose( fpReserve );
 
     fpout = fopen( OWNER_LIST_TMP, "w");
     if ( !fpout )
@@ -871,7 +867,6 @@ void save_owners( )
       remove (OWNER_LIST);
       rename (OWNER_LIST_TMP, OWNER_LIST);
       }
-    fpReserve = fopen( NULL_FILE, "r");
 }
 
 /*
@@ -4125,13 +4120,11 @@ void bug( const char *str, ... )
     log_string( buf );
     log_string( lastplayercmd );
 
-    fclose( fpReserve );
     if ( ( fp = fopen( BUG_FILE_T, "a") ) != NULL )
     {
         fprintf( fp, "%s\n", buf );
         fclose( fp );
     }
-    fpReserve = fopen( NULL_FILE, "r");
     return;
 }
 
@@ -4434,12 +4427,9 @@ void load_victors( void )
   int i;
   char *ptx;
 
-  fclose( fpReserve );
-
   fp = fopen( VICTORY_LIST, "r" );
   if( fp == NULL )
   {
-    fpReserve = fopen( NULL_FILE, "r" );
     log_string( "victor.txt load unsuccessful" );
     return;
   }
@@ -4461,7 +4451,6 @@ void load_victors( void )
   fclose(fp);
   
   log_string( "victor.txt loaded successfully" );
-  fpReserve = fopen( NULL_FILE, "r" );
   return;
 }
 
@@ -4470,12 +4459,9 @@ void save_victors( void)
   FILE *fp;
   int i;
 
-  fclose( fpReserve );
-
   fp=fopen( VICTORY_LIST_TMP, "w");
   if( fp == NULL )
     {
-    fpReserve = fopen( NULL_FILE, "r");
     return;
     }
   for (i=0;i<VICTORY_LIST_SIZE;i++)
@@ -4493,7 +4479,6 @@ void save_victors( void)
       rename(VICTORY_LIST_TMP, VICTORY_LIST );
       log_string( "victor.txt saved successfully" );
       }
-  fpReserve = fopen( NULL_FILE, "r" );
   return;
 }
 
@@ -4504,12 +4489,9 @@ void save_sites( void)
   int hour;
   int tester;
 
-  fclose( fpReserve );
-
   fp=fopen( "siteban.new", "w");
   if( fp == NULL )
     {
-    fpReserve = fopen( NULL_FILE, "r");
     return;
     }
   tester = fprintf( fp, "%u\n", Current_pvnum);
@@ -4517,7 +4499,6 @@ void save_sites( void)
     {
     fclose( fp );
       log_string( "siteban.lst save unsuccessful" );
-      fpReserve = fopen( NULL_FILE, "r");
     return;
     }
   tester = fprintf( fp, "NULL\n");
@@ -4525,7 +4506,6 @@ void save_sites( void)
     {
     fclose( fp );
       log_string( "siteban.lst save unsuccessful" );
-      fpReserve = fopen( NULL_FILE, "r");
     return;
     }
   /* write usage info */
@@ -4539,7 +4519,6 @@ void save_sites( void)
       {
       fclose( fp );
       log_string( "siteban.lst save unsuccessful" );
-      fpReserve = fopen( NULL_FILE, "r");
       return;
       }
     }
@@ -4553,7 +4532,6 @@ void save_sites( void)
       {
       fclose( fp );
       log_string( "siteban.lst save unsuccessful" );
-        fpReserve = fopen( NULL_FILE, "r");
       return;
       }
     }
@@ -4566,8 +4544,6 @@ void save_sites( void)
       rename( "siteban.new", "siteban.lst" );
       log_string( "siteban.lst saved successfully" );
       }
-
-      fpReserve = fopen( NULL_FILE, "r" );
   return;
 }
 

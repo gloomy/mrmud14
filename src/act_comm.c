@@ -166,7 +166,6 @@ note_remove (CHAR_DATA * ch, NOTE_DATA * pnote, bool remove_all)
   /*
    * Rewrite entire list.
    */
-  fclose (fpReserve);
   fp = fopen (NOTE_FILE_T, "w");
   if (fp == NULL)
     {
@@ -185,7 +184,6 @@ note_remove (CHAR_DATA * ch, NOTE_DATA * pnote, bool remove_all)
 	}
       fflush (fp);
     }
-  fpReserve = fopen (NULL_FILE, "r");
   return;
 }
 
@@ -895,7 +893,6 @@ do_note (CHAR_DATA * ch, char *argument)
 	    }
       if (!saveAll)
 	{
-	  fclose (fpReserve);
 	  fp = fopen (NOTE_FILE_T, "a");
 	  if (fp == NULL)
 	    {
@@ -909,11 +906,9 @@ do_note (CHAR_DATA * ch, char *argument)
 		       pnote->room_vnum);
 	      fflush (fp);
 	    }
-	  fpReserve = fopen (NULL_FILE, "r");
 	}
       else
 	{
-	  fclose (fpReserve);
 	  fp = fopen (NOTE_FILE_T, "w");
 	  if (fp == NULL)
 	    perror (NOTE_FILE_T);
@@ -928,7 +923,6 @@ do_note (CHAR_DATA * ch, char *argument)
 			   pnote->room_vnum);
 		}
 	      fflush (fp);
-	      fpReserve = fopen (NULL_FILE, "r");
 	    }
 	}
       if (!room_board)

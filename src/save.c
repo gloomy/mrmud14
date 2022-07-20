@@ -175,10 +175,6 @@ void save_char_obj(CHAR_DATA *ch, int which_type)
 
     open_timer( TIMER_CHAR_SAVE );
 
-#ifndef USE_THREADS
-      fclose( fpReserve );
-#endif
-
     buf[0]= *ch->name;
     buf[1]='\0';
     if( buf[0]>='A' && buf[0]<='Z')
@@ -205,7 +201,6 @@ void save_char_obj(CHAR_DATA *ch, int which_type)
 	  bug( "Save_char_obj: first fopen", 0 );
 	  perror( strsave );
           send_to_char( "Through some wierd game error, your character did not save.\n\r", ch);
-          fpReserve = fopen( NULL_FILE, "r");
 
 #ifdef USE_THREADS
  	if (!IS_NPC(ch))
@@ -266,10 +261,6 @@ void save_char_obj(CHAR_DATA *ch, int which_type)
         sprintf( qbuf, "gzip -1fq %s &", strsave);
         system( qbuf );
         } 
-
-#ifndef USE_THREADS
-      fpReserve = fopen( NULL_FILE, "r");
-#endif
 
     game_time_5=get_game_usec();
 
@@ -1208,8 +1199,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
 
     open_timer( TIMER_CHAR_LOAD );
 
-      fclose( fpReserve );
-
     #if defined(unix)
 
    /* if(  ch->pcdata->player_fp == NULL ) */
@@ -1387,8 +1376,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
        if( fp != NULL )
          fclose( fp );  
     }
-
-      fpReserve = fopen( NULL_FILE, "r");
 
     /* Fix up a few flags -    Chaos 10/1/95 */
   ch->trust = ch->level;

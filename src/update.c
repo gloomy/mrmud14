@@ -916,12 +916,9 @@ save_html_who (void)
   if (!REAL_GAME)
     return;
 
-  fclose (fpReserve);
-
   fp = fopen ("../../public_html/who.html", "w");
   if (fp == NULL)
     {
-      fpReserve = fopen (NULL_FILE, "r");
       return;
     }
 
@@ -1111,7 +1108,6 @@ save_html_who (void)
 
 
   fclose (fp);
-  fpReserve = fopen (NULL_FILE, "r");
   return;
 }
 

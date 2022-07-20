@@ -547,7 +547,6 @@ int main( int argc, char **argv )
     }
     sprintf( log_buf, "MrMud is ready on port %d.", port );
     log_string( log_buf );
-    fpReserve = fopen( NULL_FILE, "r" );
     fpAppend = fopen( NULL_FILE, "r" );
 
     mix_race_war();
@@ -2043,12 +2042,6 @@ void do_copyover (CHAR_DATA *ch, char * argument)
         fprintf (fp, "-1\n");
         fclose (fp);
 
-        /* Close reserve and other always-open files and release other resources
- */
-
- /*       fclose (fpReserve);*/
-        fclose( fpReserve );
-
         /* exec - descriptors are inherited */
 
         sprintf (buf, "%d", port);
@@ -2062,14 +2055,6 @@ void do_copyover (CHAR_DATA *ch, char * argument)
 
         perror ("do_copyover: execl");
         send_to_char ("Copyover FAILED!\n\r",ch);
-
-        /* Here you might want to reopen fpReserve */
-
-        if ( ( fpReserve = fopen( NULL_FILE, "r")) == NULL)
-	 {
-           perror( NULL_FILE );
-           abort( );
-         }
 
         if ( ( fpAppend  = fopen( NULL_FILE, "r")) == NULL)
 	 {
@@ -5549,8 +5534,6 @@ void do_llog( CHAR_DATA *ch, char *argument )
   if( lines < 20 )
     lines = 20;
 
-  fclose( fpReserve );
-
   index = 1000;
 
   if( TEST_GAME )
@@ -5574,7 +5557,6 @@ void do_llog( CHAR_DATA *ch, char *argument )
   if( index < 1000 )
     {
     send_to_char( "No log file.\n\r", ch );
-    fpReserve = fopen( NULL_FILE, "r");
     return;
     }
 
@@ -5592,7 +5574,6 @@ void do_llog( CHAR_DATA *ch, char *argument )
   if( fp == NULL )
     {
     send_to_char( "No llog generated.\n\r", ch );
-    fpReserve = fopen( NULL_FILE, "r");
     return;
     }
 
@@ -5621,8 +5602,6 @@ void do_llog( CHAR_DATA *ch, char *argument )
   send_to_char( buf, ch );
 
   fclose( fp );
-
-  fpReserve = fopen( NULL_FILE, "r");
 
   return;
 }

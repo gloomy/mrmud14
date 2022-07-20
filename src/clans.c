@@ -94,8 +94,6 @@ void write_clan_list( )
     sprintf( tempfile, "%s/%s.tmp", CLAN_DIR, CLAN_LIST );
     sprintf( filename, "%s/%s", CLAN_DIR, CLAN_LIST );
 
-    fclose( fpReserve );
-
     remove(tempfile);
     fpout = fopen( tempfile, "w");
     if ( !fpout )
@@ -115,7 +113,6 @@ void write_clan_list( )
       remove(filename);
       rename(tempfile, filename);
       }
-    fpReserve = fopen( NULL_FILE, "r" );
 }
 
 void save_all_clans( )
@@ -179,7 +176,6 @@ void save_clan( CLAN_DATA *clan )
     sprintf( tempfile, "%s/%s.tmp", CLAN_DIR, clan->filename );
 
     remove( tempfile );
-    fclose( fpReserve );
     if ( ( fp = fopen( tempfile, "w") ) == NULL )
     {
         bug( "save_clan: fopen", 0 );
@@ -231,7 +227,6 @@ void save_clan( CLAN_DATA *clan )
       rename( filename, bakfile );
       rename( tempfile, filename);
       }
-    fpReserve = fopen( NULL_FILE, "r");
     close_timer( TIMER_CLAN_SAVE );
 #ifdef USE_THREADS
 	pthread_detach(pthread_self());
@@ -502,7 +497,6 @@ void load_clans( )
     log_string( "Loading clans..." );
 
     sprintf( clanlist, "%s/%s", CLAN_DIR, CLAN_LIST );
-    fclose( fpReserve );
     if ( ( fpList = fopen( clanlist, "r") ) == NULL )
     {
         perror( clanlist );
@@ -524,7 +518,6 @@ void load_clans( )
     }
     fclose( fpList );
     log_string("Done clans " );
-    fpReserve = fopen( NULL_FILE, "r");
     return;
 }
 

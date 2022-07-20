@@ -1699,7 +1699,6 @@ void do_shutdown( CHAR_DATA *ch, char *argument )
 	  do_quit(fch, "arglebargle");
           }
       }
-    fclose( fpReserve );
     fclose( fpAppend );
     fp = fopen( SHUTDOWN_FILE, "w" );
     fprintf( fp, "Shutdown by %s.", ch->name );
@@ -3055,7 +3054,6 @@ void do_mlist( CHAR_DATA *ch, char *argument )
     }
   else
     {
-    fclose( fpReserve );
     mobFile=fopen("mlist.all","wt" );
     }
     
@@ -3101,7 +3099,6 @@ void do_mlist( CHAR_DATA *ch, char *argument )
     {
     fclose(mobFile);
     send_to_char("Written to file: mlist.all\n\r",ch);
-    fpReserve = fopen( NULL_FILE, "r" );
     }
 
   return;
@@ -3171,7 +3168,6 @@ void do_olist( CHAR_DATA *ch, char *argument )
     }
   else
     {
-    fclose( fpReserve );
     objFile=fopen("olist.all","wt" );
     }
     
@@ -3384,7 +3380,6 @@ for(level=lRange; level<hRange; level++)
     {
     fclose(objFile);
     send_to_char("Written to file: olist.all\n\r",ch);
-    fpReserve = fopen( NULL_FILE, "r" );
     }
 
   return;
@@ -4680,17 +4675,13 @@ void do_rename (CHAR_DATA* ch, char* argument)
 #else
     sprintf( strsave, "%s%s", PLAYER_DIR, capitalize( new_name ) );
 #endif
-        fclose (fpReserve); /* close the reserve file */
         file = fopen (strsave, "r"); /* attempt to to open pfile */
         if (file)
         {
                 send_to_char ("A player with that name already exists!\n\r",ch);
                 fclose (file);
-        fpReserve = fopen( NULL_FILE, "r" ); /* is this really necessary these days? */
                 return;
         }
-        fpReserve = fopen( NULL_FILE, "r" );  /* reopen the extra file */
-
         /* Check .gz file ! */
 #if !defined(macintosh) && !defined(MSDOS)
     sprintf( strsave, "%s/%c/%s.gz", PLAYER_DIR, tolower( new_name[0] ),
@@ -4699,16 +4690,13 @@ void do_rename (CHAR_DATA* ch, char* argument)
     sprintf( strsave, "%s%s.gz", PLAYER_DIR, capitalize( new_name ) );
 #endif
 
-        fclose (fpReserve); /* close the reserve file */
         file = fopen (strsave, "r"); /* attempt to to open pfile */
         if (file)
         {
                 send_to_char ("A player with that name already exists in a compressed file!\n\r",ch);
                 fclose (file);
-        fpReserve = fopen( NULL_FILE, "r" );
                 return;
         }
-        fpReserve = fopen( NULL_FILE, "r" );  /* reopen the extra file */
 
         if (get_char_world(ch,new_name)) /* check for playing level-1 non-saved */
         {

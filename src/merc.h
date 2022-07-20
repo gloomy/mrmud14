@@ -2434,7 +2434,6 @@ extern		PLAYER_GAME  	  *	last_player;
 extern		char			bug_buf		[];
 extern		time_t			current_time;
 extern		bool			fLogAll;
-extern		FILE *			fpReserve;
 extern		FILE *			fpAppend;
 extern		KILL_DATA		kill_table	[];
 extern		char			log_buf		[];
