@@ -8,8 +8,9 @@ if ( "$1" != "" ) set port="$1"
 cd ../area_current
 
 # Set limits.
-nice -10
-unlimit
+#nice -10
+#unlimit
+ulimit -c unlimited
 
     while ( 1 )
 
@@ -36,17 +37,10 @@ if ( -e shutdown.txt ) rm -f shutdown.txt
 
     echo Startup with log file $logfile
 
-    cp -f ../bin/next_md ../bin/current_md 
-    if ( ! -e ../bin/current_md ) then
-        echo There is no binary file.
-        echo Be sure to compile, and copy ../bin/md to ../bin/next_md.
-	exit 0
-    endif
-
-    ../bin/current_md $port >&! $logfile
+    ../bin/md $port >&! $logfile
 
     # Analyze the core file
-    echo where | gdb ../bin/current_md core >> $logfile
+    echo where | gdb ../bin/md core >> $logfile
     echo "\n"
     # Record ending charges
     # charges >> $logfile
