@@ -510,6 +510,10 @@ void boot_db( bool fCopyOver )
 	  char qbuf[180];
 	  strcpy( strArea, fread_word( fpList ) );
       log_string( strArea );
+
+      if ( strArea[0] == '@' )
+          continue;
+
 	  if ( strArea[0] == '$' )
 		  break;
 
@@ -544,8 +548,16 @@ void boot_db( bool fCopyOver )
   for ( ; ; )
     {
 	char *word;
+    char letter;
 
-	if ( fread_letter( fpArea ) != '#' )
+    letter = fread_letter( fpArea );
+
+      if ( letter == '@' ) {
+        fread_to_eol(fpArea);
+        continue;
+      }
+
+	if ( letter != '#' )
 	{
 	    bug( "Boot_db: # not found.", 0 );
 	    abort( );
@@ -893,6 +905,12 @@ void load_mobiles( FILE *fp )
 	int iHash;
 
 	letter                          = fread_letter( fp );
+
+    if ( letter == '@' ) {
+      fread_to_eol( fp );
+      continue;
+    }
+
 	if ( letter != '#' )
 	{
 	    bug( "Load_mobiles: # not found.", 0 );
@@ -1125,6 +1143,12 @@ void load_objects( FILE *fp )
 	int iHash;
 
 	letter                          = fread_letter( fp );
+
+    if ( letter == '@' ) {
+      fread_to_eol( fp );
+      continue;
+    }
+
 	if ( letter != '#' )
 	{
 	    bug( "Load_objects: # not found.", 0 );
@@ -1536,6 +1560,12 @@ void load_rooms( FILE *fp )
 	int iHash;
 
 	letter                          = fread_letter( fp );
+
+    if ( letter == '@' ) {
+      fread_to_eol( fp );
+      continue;
+    }
+
 	if ( letter != '#' )
 	{
 	    bug( "Load_rooms: # not found.", 0 );
