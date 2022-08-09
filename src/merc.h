@@ -767,7 +767,18 @@ struct	kill_data
 
 #define OBJ_VNUM_RIP_KEY           9900
 
-
+// weapon types
+#define WEAPON_SLICE    1
+#define WEAPON_STAB     2
+#define WEAPON_SLASH    3
+#define WEAPON_WHIP     4
+#define WEAPON_CLAW     5
+#define WEAPON_BLAST    6
+#define WEAPON_POUND    7
+#define WEAPON_CRUSH    8
+#define WEAPON_GREP     9
+#define WEAPON_BITE     10
+#define WEAPON_PIERCE   11
 
 /*
  * Item types.

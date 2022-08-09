@@ -803,7 +803,48 @@ void do_rstat( CHAR_DATA *ch, char *argument )
     return;
 }
 
+char *weapon_type_name( OBJ_DATA *obj )
+{
+  if ( obj->item_type != ITEM_WEAPON) {
+    bug( "Weapon_type_name: object not a weapon, %s.", obj->item_type );
+    return "(unknown)";
+  }
 
+  switch ( obj->value[3] )
+  {
+    case WEAPON_SLICE:  return "slice";
+    case WEAPON_STAB:   return "stab";
+    case WEAPON_SLASH:  return "slash";
+    case WEAPON_WHIP:   return "whip";
+    case WEAPON_CLAW:   return "claw";
+    case WEAPON_BLAST:  return "blast";
+    case WEAPON_POUND:  return "pound";
+    case WEAPON_CRUSH:  return "crush";
+    case WEAPON_GREP:   return "grep";
+    case WEAPON_BITE:   return "bite";
+    case WEAPON_PIERCE: return "pierce";
+  }
+
+  bug( "Weapon_type_name: unknown type %d.", obj->item_type );
+  return "(unknown)";
+}
+
+char *object_values( OBJ_DATA *obj )
+{
+  static char buf[MAX_STRING_LENGTH];
+
+  switch ( obj->item_type )
+  {
+    case ITEM_WEAPON:
+      sprintf( buf, "Values: %d %dd%d %s(%d).\n\r", obj->value[0], obj->value[1], obj->value[2], weapon_type_name( obj ), obj->value[3] );
+      break;
+    default:
+      sprintf( buf, "Values: %d %d %d %d.\n\r", obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
+      break;
+  }
+
+  return buf;
+}
 
 void do_ostat( CHAR_DATA *ch, char *argument )
 {
@@ -896,10 +937,8 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 	obj->carried_by == NULL    ? "(none)" : obj->carried_by->name,
 	obj->wear_loc );
     send_to_char( buf, ch );
-    
-    sprintf( buf, "Values: %d %d %d %d.\n\r",
-	obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
-    send_to_char( buf, ch );
+
+    send_to_char( object_values ( obj ), ch );
 
     if ( obj->first_extradesc != NULL || obj->pIndexData->first_extradesc != NULL )
     {
