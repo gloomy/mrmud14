@@ -773,12 +773,14 @@ void game_loop_unix( int control , int port)
 	 * Poll all active descriptors.
 	 */
 
+    // disabled because of log spam
+    /*
       for( dcnt=0; dcnt<255; dcnt++)
         if ( getsockopt( dcnt, SOL_SOCKET, SO_ERROR,
         (char *) &leng, (int *) &leng ) >= 0 )
           if( leng != 0 )
-           perror( "scansocket: SO_ERROR" );
-
+           //perror( "scansocket: SO_ERROR" );
+    */
 
 	if (Greeter !=NULL && Greeted !=NULL && !IS_AFFECTED(Greeter, AFF2_POSSESS) && !IS_AFFECTED(Greeted, AFF2_POSSESS))
  	  mprog_percent_check( Greeter, Greeted, NULL, NULL,GROUP_GREET_PROG );
