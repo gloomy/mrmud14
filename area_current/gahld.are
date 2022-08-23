@@ -1382,7 +1382,7 @@ The center of the open field.~
 ~
 0 -1 6409
 DDIR_UP
-The n`n² awninrn.~
+The n`nï¿½ awninrn.~
 ~
 0 -1 0
 DDIR_DOWN
@@ -2771,10 +2771,6 @@ D 0  6483 DIR_SOUTH DOOR_CLOSED ;door in Top of Northwest tower
 D 0  6487 DIR_NORTH DOOR_CLOSED ;door in The armory               
 D 0  6484 DIR_SOUTH DOOR_CLOSED ;door in Top of Northeast tower   
 D 0  6488 DIR_NORTH DOOR_CLOSED ;door in The secondary armory     
-O 0  6003   0  6496 ;              a fireplace in Order's private workshop 
-O 1  6497   0  6496 ;               a fountain in Order's private workshop 
-O 1  6498   0  6496 ;         the donation pit in Order's private workshop 
-M 1  6426   1  6496 ;               the healer in Order's private workshop 
 S
 
 
