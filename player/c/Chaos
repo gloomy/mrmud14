@@ -40,13 +40,13 @@ Armor        71
 Wimpy        0
 Deaf         0
 Channel      0
-LastTime     935147386
+LastTime     1662062508
 Arrested     0
 Jailtime     0
 Jaildate     856469767
 Mailaddress  ~
 Htmladdress  ~
-Password     ~
+Password     chV8D7kySR0Io~
 Bamfin       arrives from the north.~
 Bamfout      falls through the floor.~
 Title         is where reality ends.~
@@ -268,8 +268,8 @@ Skill        99 'general purpose'
 Skill        99 'high explosive'
 Skill        99 'slot -1'
 Speed   3
-Notes   296
-Vt100     2
+Notes   0
+Vt100     0
 Reincarnation     66
 Reincarn_allow     0
 Previous_Hours    0
