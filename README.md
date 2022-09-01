@@ -8,7 +8,7 @@
 ## How to 
 
 1. Clone repository
-2. Start/Create vritual box: `vagrant up`
+2. Start/Create virtual box: `vagrant up`
 3. Initiate some required files:
 ```
 vagrant ssh -c "cp /vagrant/clans/clan.lst.dist /vagrant/clans/clan.lst \
