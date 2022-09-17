@@ -1,12 +1,9 @@
-$vm_image                 = 'ubuntu/xenial32'
 $vm_memory                = 512
 $vm_cpus                  = 2
 $vbguest_required         = true
-$vm_ip                    = '192.168.0.20'
 
 Vagrant.configure("2") do |config|
-  config.vm.box = $vm_image
-  config.vm.network 'private_network', ip: $vm_ip
+  config.vm.box = "ubuntu/xenial32"
   config.ssh.forward_agent = true
   config.vm.network "forwarded_port", guest: 4321, host: 4321
 
@@ -14,11 +11,14 @@ Vagrant.configure("2") do |config|
     ansible.become = true
     ansible.playbook = "ansible/main.yaml"
     ansible.compatibility_mode = "2.0"
-    ansible.extra_vars = {
-        box_ip: $vm_ip
-    }
     ansible.verbose = false
-end
+  end
+
+  config.vm.provision "shell", name: "clan_lst", inline: "cp /vagrant/clans/clan.lst.dist /vagrant/clans/clan.lst"
+  config.vm.provision "shell", name: "owner_lst", inline: "cp /vagrant/area_current/owner.lst.dist /vagrant/area_current/owner.lst"
+  config.vm.provision "shell", name: "castles_are", inline: "cp /vagrant/area_current/castle/castles.are.dist /vagrant/area_current/castle/castles.are"
+  config.vm.provision "shell", name: "compile", inline: "cd /vagrant/src && make"
+  config.vm.provision "shell", name: "start", run: "always", inline: "cd /vagrant/src && screen -d -m ./startup"
 
   config.vm.provider :virtualbox do |v|
     v.linked_clone = true
