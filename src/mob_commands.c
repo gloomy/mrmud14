@@ -772,7 +772,7 @@ void do_mpat( CHAR_DATA *ch, char *argument )
     if ( ( location = find_location( ch, arg ) ) == NULL )
     {
         if( IS_NPC( ch ))
-	bug( "Mpat - No such location: vnum %u.", ch->pIndexData->vnum );
+	bug( "Mpat - No such location: vnum %u issued command: mpat %s %s", ch->pIndexData->vnum, arg, argument );
 	return;
     }
 
