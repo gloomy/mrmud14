@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", name: "owner_lst", inline: "cp /vagrant/area_current/owner.lst.dist /vagrant/area_current/owner.lst"
   config.vm.provision "shell", name: "castles_are", inline: "cp /vagrant/area_current/castle/castles.are.dist /vagrant/area_current/castle/castles.are"
   config.vm.provision "shell", name: "compile", inline: "cd /vagrant/src && make"
-  config.vm.provision "shell", name: "start", run: "always", inline: "cd /vagrant/src && screen -d -m ./startup"
+  config.vm.provision "shell", name: "start", run: "always", inline: "cd /vagrant/src && sudo -u vagrant screen -d -m ./startup;exec tcsh"
 
   config.vm.provider :virtualbox do |v|
     v.linked_clone = true
